@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: lightvision_production_db
+    restart: always
+    environment:
+      POSTGRES_USER: lightvision_admin
+      POSTGRES_PASSWORD: secure_password_123
+      POSTGRES_DB: product_order_system
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
