@@ -9,6 +9,7 @@ services:
       POSTGRES_USER: lightvision_admin
       POSTGRES_PASSWORD: secure_password_123
       POSTGRES_DB: product_order_system
+      TZ: UTC
     ports:
       - "5432:5432"
     volumes:

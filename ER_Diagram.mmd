@@ -1,0 +1,44 @@
+erDiagram
+    USERS {
+        long id PK
+        string username
+        string email
+        string password
+        string role "ENUM('ADMIN', 'CUSTOMER')"
+    }
+
+    CATEGORIES {
+        long id PK
+        string name
+        string description
+    }
+
+    PRODUCTS {
+        long id PK
+        string name
+        decimal price
+        int stock
+        string description
+        long category_id FK
+    }
+
+    ORDERS {
+        long id PK
+        long user_id FK
+        decimal total_amount
+        string status "PENDING, COMPLETED, CANCELLED"
+        datetime created_at
+    }
+
+    ORDER_ITEMS {
+        long id PK
+        long order_id FK
+        long product_id FK
+        int quantity
+        decimal price_at_purchase
+    }
+
+    USERS ||--o{ ORDERS : places
+    CATEGORIES ||--o{ PRODUCTS : "has"
+    ORDERS ||--|{ ORDER_ITEMS : contains
+    PRODUCTS ||--o{ ORDER_ITEMS : "included in"
