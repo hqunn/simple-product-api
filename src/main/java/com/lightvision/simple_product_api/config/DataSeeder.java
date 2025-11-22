@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.lightvision.simple_product_api.entity.Category;
@@ -14,7 +15,7 @@ import com.lightvision.simple_product_api.repository.CategoryRepository;
 import com.lightvision.simple_product_api.repository.ProductRepository;
 import com.lightvision.simple_product_api.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor; // Chỉ cần import List, không cần Arrays nữa
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class DataSeeder implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -31,27 +33,23 @@ public class DataSeeder implements CommandLineRunner {
             return;
         }
 
-        // 1. SEED USERS
-        // User 1: Admin
         User admin = User.builder()
                 .username("admin")
                 .email("admin@lightvision.com")
-                .password("123456")
+                .password(passwordEncoder.encode("123456")) 
                 .role(Role.ADMIN)
                 .build();
-        // User 2: Customer
+
         User customer = User.builder()
                 .username("customer")
                 .email("customer@lightvision.com")
-                .password("123456")
+                .password(passwordEncoder.encode("123456"))
                 .role(Role.CUSTOMER)
                 .build();
         
-        // SỬA: Dùng List.of thay vì Arrays.asList
         userRepository.saveAll(List.of(admin, customer));
-        System.out.println("----- Users Created: admin & customer -----");
+        System.out.println("----- Users Created: admin & customer (Password Encrypted) -----");
 
-        // 2. SEED CATEGORIES
         Category electronics = categoryRepository.save(Category.builder()
                 .name("Electronics")
                 .description("Devices, gadgets, and computer accessories")
@@ -69,7 +67,6 @@ public class DataSeeder implements CommandLineRunner {
 
         System.out.println("----- Categories Created: Electronics, Books, Fashion -----");
 
-        // 3. SEED PRODUCTS
         Product laptop = Product.builder()
                 .name("Gaming Laptop ASUS ROG")
                 .price(BigDecimal.valueOf(1200.00))
@@ -94,7 +91,6 @@ public class DataSeeder implements CommandLineRunner {
                 .category(fashion)
                 .build();
 
-        // SỬA: Dùng List.of thay vì Arrays.asList
         productRepository.saveAll(List.of(laptop, book, tShirt));
         System.out.println("----- Products Created: Laptop, Book, T-Shirt -----");
     }

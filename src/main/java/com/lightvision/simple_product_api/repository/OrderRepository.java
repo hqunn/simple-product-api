@@ -9,6 +9,5 @@ import com.lightvision.simple_product_api.entity.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    // Lấy lịch sử mua hàng của 1 user cụ thể
     List<Order> findByUserId(Long userId);
 }

@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class OrderRequest {
-    private Long userId; // Tạm thời gửi userId thủ công (vì chưa làm JWT)
-    private List<OrderItemRequest> items; // Danh sách hàng muốn mua
+    private Long userId;
+    private List<OrderItemRequest> items;
 
     @Data
     public static class OrderItemRequest {

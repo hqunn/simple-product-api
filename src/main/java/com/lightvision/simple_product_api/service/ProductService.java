@@ -22,23 +22,19 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    // 1. get all products 
     public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
-        // Use Stream to convert each Entity to DTO
         return products.stream()
                 .map(this::mapToProductResponse)
                 .collect(Collectors.toList());
     }
 
-    // 2. get product by id
     public ProductResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return mapToProductResponse(product);
     }
 
-    // 3. create product
     public ProductResponse createProduct(ProductRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -62,7 +58,6 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    // --- Helper Method: Convert from Entity to DTO ---
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()
                 .id(product.getId())
@@ -70,7 +65,6 @@ public class ProductService {
                 .price(product.getPrice())
                 .stock(product.getStock())
                 .description(product.getDescription())
-                // Map Category Entity sang Category Response
                 .category(CategoryResponse.builder()
                         .id(product.getCategory().getId())
                         .name(product.getCategory().getName())

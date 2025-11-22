@@ -7,6 +7,5 @@ import com.lightvision.simple_product_api.entity.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    // Ví dụ: Tìm category theo tên
     boolean existsByName(String name);
 }

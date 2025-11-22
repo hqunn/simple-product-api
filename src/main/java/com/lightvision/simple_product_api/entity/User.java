@@ -1,15 +1,29 @@
 package com.lightvision.simple_product_api.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
 import java.util.List;
 
-@Entity // JPA entity
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
 @Table(name = "users")
-@Data // Lombok: getters, setters, toString, equals, hashCode ...
-@NoArgsConstructor // No-args constructor
-@AllArgsConstructor // All-args constructor
-@Builder // Builder pattern
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
   @Id

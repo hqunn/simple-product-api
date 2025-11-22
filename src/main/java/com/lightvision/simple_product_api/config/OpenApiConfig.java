@@ -15,13 +15,11 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                // Thông tin chung về dự án
                 .info(new Info()
                         .title("Simple Product & Order API")
                         .version("1.0")
                         .description("API Documentation for LightVision Backend Coding Test. \n\n" +
                                      "Implemented by **Dinh Hoang Quan**."))
-                // Cấu hình Server (để test trực tiếp trên UI)
                 .servers(List.of(
                         new Server().url("http://localhost:8080").description("Local Environment")
                 ));
